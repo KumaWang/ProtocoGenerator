@@ -1,0 +1,81 @@
+﻿module CharacterModule
+{
+	table CharacterTable
+	{
+		uint *id++,
+		uint aid,
+		int money,			// 保留
+		int hp,
+		int sp,
+		short speed,
+		short job,
+		short head,
+		short body,
+		short weapon,
+		short accessory,
+		short shield,
+		short accessory2,
+		short accessory3,
+		short headpalette,
+		short bodypalette,
+		varchar(24) name,
+		sbyte str,
+		sbyte agi,
+		sbyte vit,
+		sbyte wit,
+		sbyte dex,
+		sbyte luk,
+		sbyte CharNum,
+		sbyte haircolor,
+		varchar(255) lastMap,
+		ushort lastMapX,
+		ushort lastMapY,
+		int Robe,
+		byte sex
+	}
+
+	packet Character
+	{
+		uint gid,
+		int money,			// 保留
+		int hp,
+		int maxHp,
+		int sp,
+		int maxSp,
+		short speed,
+		short job,
+		short head,
+		short body,
+		short weapon,
+		short accessory,
+		short shield,
+		short accessory2,
+		short accessory3,
+		short headpalette,
+		short bodypalette,
+		string name,
+		sbyte str,
+		sbyte agi,
+		sbyte vit,
+		sbyte wit,
+		sbyte dex,
+		sbyte luk,
+		sbyte CharNum,
+		sbyte haircolor,
+		string lastMap,
+		int Robe,
+		byte sex
+	}
+
+	push void PushCharList(Character[] chars) -> 107;
+	push void NOTIFY_ACCESSIBLE_MAPNAME() -> 0x840;
+	push void Ping(uint aid) -> 0x187;
+	push void NOTIFY_ZONESVR(uint gid, string mapName, uint ip, ushort port) -> 0x71;
+
+	pull void ConnectInfoChanged(string username) -> 512; // 0x200
+	pull void ConnectToCharacterServer(uint aid, uint authCode, uint userLevel, ushort clientType, byte sex) -> 0x65;
+	pull void SelectCharacter(sbyte charNum) -> 0x66;
+	pull void MAKE_CHAR(string name, byte str, byte agi, byte vit, byte int2, byte dex, byte luk, byte charNum, short headlPol, short head) -> 0x67;
+	pull void MAKE_CHAR2(string name, byte charNum, short headPol, short head) -> 0x970;
+	pull void Ping(uint aid) -> 0x187;
+}

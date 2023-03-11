@@ -1,0 +1,22 @@
+﻿module MapModule
+{
+	pull void ENTER(uint aid, uint gid, uint authCode, uint clientTime, byte sex) -> 0x72;
+	pull void REQUEST_TIME(uint clientTime) -> 0x7e;
+	pull void NOTIFY_ACTORINIT() -> 0x7d;
+	pull void REQUEST_MOVE(ushort x, ushort y) -> 0x85;
+	pull void REQNAME(uint aid) -> 0x94;
+
+	push void ACCEPT_ENTER(uint startTime, ushort x, ushort y, byte dir) -> 0x73;
+	push void NOTIFY_TIME(uint time) -> 0x7f;
+	push void ACK_REQNAME(uint aid, string name) -> 0x95;
+	push void NOTIFY_MOVE(uint gid, float x, float y, uint moveStartTime) -> 0x86;
+	push void NOTIFY_PLAYERMOVE(uint moveStartTime, float fromX, float fromY, ushort toX, ushort toY) -> 0x87;
+
+	pull void REQUEST_QUIT() -> 0x82;
+	push void ACCEPT_QUIT() -> 0x83;
+
+	pull void REQUEST_CHAT(string msg) -> 0x8c;
+	push void NOTIFY_CHAT(uint gid, string msg) -> 0x8d;
+
+	push void NOTIFY_NEWENTRY7(byte objecttype, uint gid, uint speed, ushort bodyState, ushort healthState, ushort effectState, int job, int head, long weapon, short accessory, short accessory2, short accessory3, short haedplette, short bodypalette, short robe, short gemblemVer, short honor, long virtue, byte isPKModeOn, byte sex) -> 0x99;
+}

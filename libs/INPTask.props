@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'True' == 'True'">
+      <PropertyGroup>
+        <EnableDefaultINPItems Condition="'$(EnableDefaultINPItems)' == ''">True</EnableDefaultINPItems>
+      </PropertyGroup>
+
+      <ItemGroup Condition="'$(EnableDefaultItems)' == 'True'">
+        <INP Include="**/*.inp" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" Condition="'$(EnableDefaultINPItems)' == 'True'" />
+      </ItemGroup>
+    </When>
+  </Choose>
+</Project>

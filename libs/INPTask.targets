@@ -1,0 +1,44 @@
+<Project DefaultTargets="INPCompile" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <BuildSystem>MSBuild</BuildSystem>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PrepareResourcesDependsOn>
+      INPCompile;
+      $(PrepareResourcesDependsOn)
+    </PrepareResourcesDependsOn>
+    <SourceFilesProjectOutputGroupDependsOn>
+      INPCompile;
+      $(SourceFilesProjectOutputGroupDependsOn)
+    </SourceFilesProjectOutputGroupDependsOn>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <INP>
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>$(RootNamespace)</CustomToolNamespace>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <Encoding>UTF-8</Encoding>
+      <TargetLanguage>CSharp</TargetLanguage>
+      <Listener>true</Listener>
+      <Visitor>true</Visitor>
+      <Abstract>false</Abstract>
+      <ForceAtn>false</ForceAtn>
+    </INP>
+  </ItemDefinitionGroup>
+
+  <UsingTask TaskName="INPTask" AssemblyFile="$(ProjectDir)\..\libs\iuiu.server.build.task.dll" />
+  <Target Name="INPCompile" Outputs="@(INPGeneratedCodeFiles)">
+    <INPTask SourceCodeFiles="@(INP -> '%(FullPath)')" TargetFolder="$(ProjectDir)\obj\$(Configuration)">
+      <Output ItemName="INPGeneratedCodeFiles" TaskParameter="GeneratedCodeFiles" />
+    </INPTask>
+  </Target>
+
+</Project>
+

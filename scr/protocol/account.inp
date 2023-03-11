@@ -1,0 +1,25 @@
+﻿module AccountModule
+{
+	table AccountTable
+	{
+		uint *id++,
+		varchar(24) username,
+		varchar(24) password,
+		byte sex,
+		ulong lastlogintime
+	}
+
+	packet ServerInfo 
+	{
+		uint ip,
+		ushort port,
+		string name,
+		ushort usercount,
+		ushort state,
+		ushort property
+	}
+
+	pull void Login(uint version, string account, string password, byte clienttype) -> 102;
+	push void PushLogin(int authCode, uint aid, uint userLevel, uint lastLoginIP, string lastLoginTime, byte sex, ServerInfo[] info) -> 105;
+	push void PushLoginError(byte errorid, string message) -> 106;
+}

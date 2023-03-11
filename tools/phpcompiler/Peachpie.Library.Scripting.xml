@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Peachpie.Library.Scripting</name>
+    </assembly>
+    <members>
+        <member name="T:Peachpie.Library.Scripting.Script">
+            <summary>
+            Script representing a compiled submission.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Script._previousSubmissions">
+            <summary>
+            Set of dependency submissions.
+            Can be empty.
+            These scripts are expected to be evaluated when running this script.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Script._entryPoint">
+            <summary>
+            The entry method of the submissions global code.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Script._image">
+            <summary>
+            Submission assembly image.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Script._assemblyName">
+            <summary>
+            Siubmission assembly name.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Script._script">
+            <summary>
+            In case of valid submission, <c>&lt;Script&gt;</c> type representing the submissions global code.
+            </summary>
+        </member>
+        <member name="P:Peachpie.Library.Scripting.Script.DependingSubmissions">
+            <summary>
+            Refernces to scripts that preceeds this one.
+            Current script requires these to be evaluated first.
+            </summary>
+        </member>
+        <member name="P:Peachpie.Library.Scripting.Script.Image">
+            <summary>
+            Gets the assembly content.
+            </summary>
+        </member>
+        <member name="P:Peachpie.Library.Scripting.Script.AssemblyName">
+            <summary>
+            Gets the script assembly name.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Script.CollectDependencies(System.Reflection.Assembly,Peachpie.Library.Scripting.PhpCompilationFactory,System.Collections.Generic.IEnumerable{Peachpie.Library.Scripting.Script})">
+            <summary>
+            Collects scripts which declarations were used directly in the compiled assembly.
+            These scripts are dependencies to the assembly so they must be evaluated first in order to re-use <paramref name="assembly"/> in future.
+            </summary>
+            <param name="assembly">Compiled assembly.</param>
+            <param name="builder">Assembly factory.</param>
+            <param name="previousSubmissions">All scripts referenced by the assembly compilation.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Script.Create(Pchp.Core.Context.ScriptOptions,System.String,Peachpie.Library.Scripting.PhpCompilationFactory,System.Collections.Generic.IEnumerable{Peachpie.Library.Scripting.Script})">
+            <summary>
+            Compiles <paramref name="code"/> and creates script.
+            </summary>
+            <param name="options">Compilation options.</param>
+            <param name="code">Code to be compiled.</param>
+            <param name="builder">Assembly builder.</param>
+            <param name="previousSubmissions">Enumeration of scripts that were evaluated within current context. New submission may reference them.</param>
+            <returns>New script reepresenting the compiled code.</returns>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Script.CreateInvalid(System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.Diagnostic})">
+            <summary>
+            Initializes an invalid script that throws diagnostics upon invoking.
+            </summary>
+            <param name="diagnostics"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Script.HasErrors(System.Collections.Generic.IEnumerable{Microsoft.CodeAnalysis.Diagnostic})">
+            <summary>
+            Checks if given collection contains fatal errors.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Script.GetGlobalRoutineHandle(System.String)">
+            <summary>
+            Resolves global function handle(s).
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.PhpCompilationFactoryBase.MetadataReferences">
+            <summary>
+            Collect references we have to pass to the compilation.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.PhpCompilationFactoryBase._assemblies">
+            <summary>
+            Set of simple assembly names (submissions) loaded by the factory.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.PhpFunctions._lambdaFuncName">
+            <summary>
+            CLR name of the lambda function also internal PHP name if <c>__FUNCTION__</c> is used inside.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.PhpFunctions._lambdaFormatString">
+            <summary>
+            Name of the lambda when registered in <see cref="T:Pchp.Core.Context"/>.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.PhpFunctions.create_function(Pchp.Core.Context,System.String,System.String)">
+            <summary>
+            Creates an anonymous function from the parameters passed, and returns a unique name for it.
+            </summary>
+            <param name="ctx">Runtime context.</param>
+            <param name="args">The function arguments.</param>
+            <param name="code">the function body.</param>
+            <returns>Returns a unique function name as a string, or <c>FALSE</c> on error.</returns>
+        </member>
+        <member name="T:Peachpie.Library.Scripting.ScriptingContext">
+            <summary>
+            Data associated with <see cref="T:Pchp.Core.Context"/>.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.ScriptingContext.EnsureContext(Pchp.Core.Context)">
+            <summary>
+            Gets data associated with given context.
+            </summary>
+        </member>
+        <member name="P:Peachpie.Library.Scripting.ScriptingContext.Submissions">
+            <summary>
+            Set of submissions already evaluated within the context.
+            </summary>
+        </member>
+        <member name="P:Peachpie.Library.Scripting.ScriptingContext.LastLambdaIndex">
+            <summary>
+            Index of function created with <see cref="M:Peachpie.Library.Scripting.PhpFunctions.create_function(Pchp.Core.Context,System.String,System.String)"/>.
+            </summary>
+        </member>
+        <member name="F:Peachpie.Library.Scripting.Tokenizer.TOKEN_PARSE">
+            <summary>
+            Recognises the ability to use reserved words in specific contexts.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Tokenizer.token_name(System.Int32)">
+            <summary>
+            Get the symbolic name of a given PHP token.
+            </summary>
+        </member>
+        <member name="M:Peachpie.Library.Scripting.Tokenizer.token_get_all(System.String,System.Int32)">
+            <summary>
+            Split given source into PHP tokens.
+            </summary>
+            <param name="source">The PHP source to parse.</param>
+            <param name="flags"></param>
+            <returns>
+            An array of token identifiers.
+            Each individual token identifier is either a single character (i.e.: ;, ., >, !, etc...),
+            or a three element array containing the token index in element 0, the string content of the original token in element 1 and the line number in element 2.
+            </returns>
+        </member>
+    </members>
+</doc>
